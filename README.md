@@ -33,3 +33,6 @@ Other 3D model formats in 7zip due to github 50mb limit) = https://github.com/ec
 
 3D renders: https://github.com/eclsnowman/Eustathios-Spider-V2/tree/master/Documentation/Pictures
 
+Image of printed parts:
+![Eustathios Spider - V2 Printed Parts Image](https://raw.githubusercontent.com/eclsnowman/Eustathios-Spider-V2/master/Documentation/Pictures/Printed_Parts(Black_With_Hercustruder_Extruder).jpg)
+
