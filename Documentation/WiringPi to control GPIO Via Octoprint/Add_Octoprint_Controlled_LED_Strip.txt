@@ -1,0 +1,48 @@
+
+***You must install WiringPi to utilize the rest of these instructions
+***Install instructions are atL http://wiringpi.com/download-and-install/
+***To install WiringPi SSH into to pi (I use putty from windows)
+***CTRL-V to scroll all the way to the end
+***Type the text below, then CTRL-X to exit and save when exiting
+
+git clone git://git.drogon.net/wiringPi
+cd wiringPi
+git pull origin
+./build
+
+
+
+***You must tell the PI how the GPIO pins we have selected will be used (we need them as outputs outputs)
+***Add this to the end of /etc/init.d/octoprint
+***Edit it by SSH to pi and type: sudo nano /etc/init.d/octoprint
+***CTRL-V to scroll all the way to the end
+***Type the text below, then CTRL-X to exit and save when exiting
+
+#Run export GPIO Raspberry
+
+/usr/local/bin/gpio export 17 out
+/usr/local/bin/gpio export 18 out
+/usr/local/bin/gpio -g write 17 1
+/usr/local/bin/gpio -g write 18 1
+
+
+
+
+***We need to add custom actions in Octoprint to turn the relays on and off via GPIO
+***Add this to the System->Actions area of config.yaml  
+***Edit it by SSH to pi and type: sudo nano ~/.octoprint/config.yaml
+***CTRL-V to scroll down until you see the actions
+***Type the text below to add the new actions, then CTRL-X to exit and save when exiting
+
+  - action: Relay1On
+    command: gpio -g write 17 0
+    name: Turn on Relay1
+  - action: Relay1Off
+    command: gpio -g write 17 1
+    name: Turn off Relay1
+  - action: Relay2On
+    command: gpio -g write 18 0
+    name: Turn on Relay2
+  - action: Relay2Off
+    command: gpio -g write 18 1
+    name: Turn off Relay2
