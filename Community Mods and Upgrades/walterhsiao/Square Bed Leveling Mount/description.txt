@@ -1,0 +1,1 @@
+Replacement for Bed_Leveling_Mount, designed to be used with a rectangular heated bed.  More info at http://www.thingiverse.com/thing:854260
