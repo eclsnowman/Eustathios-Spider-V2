@@ -1,0 +1,1 @@
+Alternate E3Dv6 carriage design.  Nozzle height is significantly higher than the original carriage and my not be compatible without other changes.  More info at http://www.thingiverse.com/thing:1322641.
