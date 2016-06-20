@@ -1,0 +1,1 @@
+Replacement for Z_Axis_Bed_Support, designed to be compatible to 1204 ballscrews instead of the 12mm lead screws.  More info at http://www.thingiverse.com/thing:854267
