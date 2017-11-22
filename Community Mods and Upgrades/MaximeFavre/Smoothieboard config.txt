@@ -1,0 +1,289 @@
+Config file for Eustathios V2 running on original smoothieboard and latest edge firmware (22.11.2017)
+
+Setup used:
+- I use walter's carriage. hotend fan is always powered so no switch config
+  Parts fans are on 2.4 with PWM
+- no bed probe, a well levelled bed is all you need ;)
+- hotend on 2.7, sensor 0.23
+- bed on 2.6, sensor 0.24
+- bondtech extruder (you may need to adjust step/mm if you use another one)
+- viki2 LCD wired as follow:
+    SDCD to P0.27
+    BTN to P1.30
+    SDCS to P2.8
+    LCS to P0.16
+    SCK to P0.15
+    GND to 5v power supply's ground or a ground pin on the smoothieboard
+    ENCB to P3.26
+    ENCA to P3.25
+    MISO to P0.8
+    A0 to P2.11
+    MOSI to P0.18
+    =Vin to 5v power supply
+
+    BTN to None, Viki 2.0 has 2 Blue BTN wires that do the same thing
+    Buzzer to P1.31
+    Blue-LED to P1.23
+    Red-LED to P1.22
+**I don't use red/blue led in this config
+
+
+
+
+# Smoothieboard configuration file, see http://smoothieware.org/configuring-smoothie
+# NOTE Lines must not exceed 132 characters, and '#' characters mean what follows is ignored
+## Robot module configurations : general handling of movement G-codes and slicing into moves
+
+# Basic motion configuration
+default_feed_rate                            4000             # Default speed (mm/minute) for G1/G2/G3 moves
+default_seek_rate                            4000             # Default speed (mm/minute) for G0 moves
+mm_per_arc_segment                           0.0              # Fixed length for line segments that divide arcs, 0 to disable
+#mm_per_line_segment                         5                # Cut lines into segments this size
+mm_max_arc_error                             0.01             # The maximum error for line segments that divide arcs 0 to disable
+                                                              # note it is invalid for both the above be 0
+                                                              # if both are used, will use largest segment length based on radius
+
+# Arm solution configuration : Cartesian robot. Translates mm positions into stepper positions
+# See http://smoothieware.org/stepper-motors
+alpha_steps_per_mm                           80               # Steps per mm for alpha ( X ) stepper
+beta_steps_per_mm                            80               # Steps per mm for beta ( Y ) stepper
+gamma_steps_per_mm                           1280             # Steps per mm for gamma ( Z ) stepper
+
+# Planner module configuration : Look-ahead and acceleration configuration
+# See http://smoothieware.org/motion-control
+acceleration                                 9000             # Acceleration in mm/second/second.
+z_acceleration                              300              # Acceleration for Z only moves in mm/s^2, 0 uses acceleration which is the default. DO NOT SET ON A DELTA
+junction_deviation                           0.05             # See http://smoothieware.org/motion-control#junction-deviation
+#z_junction_deviation                        0.0              # For Z only moves, -1 uses junction_deviation, zero disables junction_deviation on z moves DO NOT SET ON A DELTA
+
+# Cartesian axis speed limits
+x_axis_max_speed                             30000            # Maximum speed in mm/min
+y_axis_max_speed                             30000            # Maximum speed in mm/min
+z_axis_max_speed                             300              # Maximum speed in mm/min
+
+# Stepper module configuration 
+# Pins are defined as  ports, and pin numbers, appending "!" to the number will invert a pin
+# See http://smoothieware.org/pin-configuration and http://smoothieware.org/pinout
+alpha_step_pin                               2.0              # Pin for alpha stepper step signal
+alpha_dir_pin                                0.5!              # Pin for alpha stepper direction, add '!' to reverse direction
+alpha_en_pin                                 0.4              # Pin for alpha enable pin
+alpha_current                                1.5              # X stepper motor current
+alpha_max_rate                               30000.0          # Maximum rate in mm/min
+
+beta_step_pin                                2.1              # Pin for beta stepper step signal
+beta_dir_pin                                 0.11             # Pin for beta stepper direction, add '!' to reverse direction
+beta_en_pin                                  0.10             # Pin for beta enable
+beta_current                                 1.5              # Y stepper motor current
+beta_max_rate                                30000.0          # Maxmimum rate in mm/min
+
+gamma_step_pin                               2.2              # Pin for gamma stepper step signal
+gamma_dir_pin                                0.20             # Pin for gamma stepper direction, add '!' to reverse direction
+gamma_en_pin                                 0.19             # Pin for gamma enable
+gamma_current                                1.5              # Z stepper motor current
+gamma_max_rate                               300.0            # Maximum rate in mm/min
+
+## Extruder module configuration
+# See http://smoothieware.org/extruder
+extruder.hotend.enable                          true          # Whether to activate the extruder module at all. All configuration is ignored if false
+extruder.hotend.steps_per_mm                    476.5         # Steps per mm for extruder stepper
+extruder.hotend.default_feed_rate               600           # Default rate ( mm/minute ) for moves where only the extruder moves
+extruder.hotend.acceleration                    1000           # Acceleration for the stepper motor mm/sec²
+extruder.hotend.max_speed                       5000            # Maximum speed in mm/s
+
+extruder.hotend.step_pin                        2.3           # Pin for extruder step signal
+extruder.hotend.dir_pin                         0.22          # Pin for extruder dir signal ( add '!' to reverse direction )
+extruder.hotend.en_pin                          0.21          # Pin for extruder enable signal
+
+# Extruder offset
+#extruder.hotend.x_offset                        0            # X offset from origin in mm
+#extruder.hotend.y_offset                        0            # Y offset from origin in mm
+#extruder.hotend.z_offset                        0            # Z offset from origin in mm
+
+# Firmware retract settings when using G10/G11, these are the defaults if not defined, must be defined for each extruder if not using the defaults
+#extruder.hotend.retract_length                  3            # Retract length in mm
+#extruder.hotend.retract_feedrate                45           # Retract feedrate in mm/sec
+#extruder.hotend.retract_recover_length          0            # Additional length for recover
+#extruder.hotend.retract_recover_feedrate        8            # Recover feedrate in mm/sec (should be less than retract feedrate)
+#extruder.hotend.retract_zlift_length            0            # Z-lift on retract in mm, 0 disables
+#extruder.hotend.retract_zlift_feedrate          6000         # Z-lift feedrate in mm/min (Note mm/min NOT mm/sec)
+
+delta_current                                    1.3          # First extruder stepper motor current
+
+
+## Temperature control configuration
+# See http://smoothieware.org/temperaturecontrol
+
+# First hotend configuration
+temperature_control.hotend.enable            true             # Whether to activate this ( "hotend" ) module at all.
+temperature_control.hotend.thermistor_pin    0.23             # Pin for the thermistor to read
+temperature_control.hotend.heater_pin        2.7              # Pin that controls the heater, set to nc if a readonly thermistor is being defined
+temperature_control.hotend.thermistor        Semitec        # See http://smoothieware.org/temperaturecontrol#toc5
+#temperature_control.hotend.beta             4066             # Or set the beta value
+temperature_control.hotend.set_m_code        104              # M-code to set the temperature for this module
+temperature_control.hotend.set_and_wait_m_code 109            # M-code to set-and-wait for this module
+temperature_control.hotend.designator        T                # Designator letter for this module
+#temperature_control.hotend.max_temp         300              # Set maximum temperature - Will prevent heating above 300 by default
+#temperature_control.hotend.min_temp         0                # Set minimum temperature - Will prevent heating below if set
+
+# Safety control is enabled by default and can be overidden here, the values show the defaults
+# See http://smoothieware.org/temperaturecontrol#runaway
+#temperature_control.hotend.runaway_heating_timeout      900  # How long it can take to heat up, max is 2040 seconds.
+#temperature_control.hotend.runaway_cooling_timeout        0  # How long it can take to cool down if temp is set lower, max is 2040 seconds
+#temperature_control.hotend.runaway_range                20   # How far from the set temperature it can wander, max setting is 63°C
+
+# PID configuration 
+# See http://smoothieware.org/temperaturecontrol#pid
+#temperature_control.hotend.p_factor         13.7             # P ( proportional ) factor
+#temperature_control.hotend.i_factor         0.097            # I ( integral ) factor
+#temperature_control.hotend.d_factor         24               # D ( derivative ) factor
+
+#temperature_control.hotend.max_pwm          64               # Max pwm, 64 is a good value if driving a 12v resistor with 24v.
+
+
+temperature_control.bed.enable               true             # Whether to activate this ( "hotend" ) module at all.
+temperature_control.bed.thermistor_pin       0.24             # Pin for the thermistor to read
+temperature_control.bed.heater_pin           2.6              # Pin that controls the heater
+temperature_control.bed.thermistor           Honeywell100K    # See http://smoothieware.org/temperaturecontrol#thermistor
+#temperature_control.bed.beta                3974             # Or set the beta value
+temperature_control.bed.set_m_code           140              # M-code to set the temperature for this module
+temperature_control.bed.set_and_wait_m_code  190              # M-code to set-and-wait for this module
+temperature_control.bed.designator           B                # Designator letter for this module
+
+# Bang-bang ( simplified ) control
+# See http://smoothieware.org/temperaturecontrol#bang-bang
+#temperature_control.bed.bang_bang           false            # Set to true to use bang bang control rather than PID
+#temperature_control.bed.hysteresis          2.0              # Set to the temperature in degrees C to use as hysteresis
+
+## Switch modules
+# See http://smoothieware.org/switch
+
+# Switch module for fan control
+switch.fan.enable                            true             # Enable this module
+switch.fan.input_on_command                  M106             # Command that will turn this switch on
+switch.fan.input_off_command                 M107             # Command that will turn this switch off
+switch.fan.output_pin                        2.4              # Pin this module controls
+switch.fan.output_type                       pwm              # PWM output settable with S parameter in the input_on_comand
+#switch.fan.max_pwm                          255              # Set max pwm for the pin default is 255
+
+#switch.misc.enable                          true             # Enable this module
+#switch.misc.input_on_command                M42              # Command that will turn this switch on
+#switch.misc.input_off_command               M43              # Command that will turn this switch off
+#switch.misc.output_pin                      2.4              # Pin this module controls
+#switch.misc.output_type                     digital          # Digital means this is just an on or off pin
+
+## Temperatureswitch
+# See http://smoothieware.org/temperatureswitch
+# Automatically toggle a switch at a specified temperature. Different ones of these may be defined to monitor different temperatures and switch different swithxes
+# Useful to turn on a fan or water pump to cool the hotend
+#temperatureswitch.hotend.enable              true            #
+#temperatureswitch.hotend.designator          T               # first character of the temperature control designator to use as the temperature sensor to monitor
+#temperatureswitch.hotend.switch              misc            # select which switch to use, matches the name of the defined switch
+#temperatureswitch.hotend.threshold_temp      60.0            # temperature to turn on (if rising) or off the switch
+#temperatureswitch.hotend.heatup_poll         15              # poll heatup at 15 sec intervals
+#temperatureswitch.hotend.cooldown_poll       60              # poll cooldown at 60 sec intervals
+
+## Endstops
+# See http://smoothieware.org/endstops
+endstops_enable                              true             # The endstop module is enabled by default and can be disabled here
+#corexy_homing                               false            # Set to true if homing on a hbot or corexy
+alpha_min_endstop                            1.24!^            # Pin to read min endstop, add a ! to invert if endstop is NO connected to ground
+#alpha_max_endstop                           1.25^            # Pin to read max endstop, uncomment this and comment the above if using max endstops
+alpha_homing_direction                       home_to_min      # Or set to home_to_max and set alpha_max and uncomment the alpha_max_endstop
+alpha_min                                    0                # This gets loaded as the current position after homing when home_to_min is set
+alpha_max                                    200              # This gets loaded as the current position after homing when home_to_max is set
+beta_min_endstop                             1.26!^            # Pin to read min endstop, add a ! to invert if endstop is NO connected to ground
+#beta_max_endstop                            1.27^            # Pin to read max endstop, uncomment this and comment the above if using max endstops
+beta_homing_direction                        home_to_min      # Or set to home_to_max and set alpha_max and uncomment the alpha_max_endstop
+beta_min                                     0                # This gets loaded as the current position after homing when home_to_min is set
+beta_max                                     200              # This gets loaded as the current position after homing when home_to_max is set
+gamma_min_endstop                            1.28!^            # Pin to read min endstop, add a ! to invert if endstop is NO connected to ground
+#gamma_max_endstop                           1.29^            # Pin to read max endstop, uncomment this and comment the above if using max endstops
+gamma_homing_direction                       home_to_min      # Or set to home_to_max and set alpha_max and uncomment the alpha_max_endstop
+gamma_min                                    0                # This gets loaded as the current position after homing when home_to_min is set
+gamma_max                                    200              # This gets loaded as the current position after homing when home_to_max is set
+
+alpha_max_travel                             500              # Max travel in mm for alpha/X axis when homing
+beta_max_travel                              500              # Max travel in mm for beta/Y axis when homing
+gamma_max_travel                             500              # Max travel in mm for gamma/Z axis when homing
+
+# Optional enable limit switches, actions will stop if any enabled limit switch is triggered
+#alpha_limit_enable                          false            # Set to true to enable X min and max limit switches
+#beta_limit_enable                           false            # Set to true to enable Y min and max limit switches
+#gamma_limit_enable                          false            # Set to true to enable Z min and max limit switches
+
+# Endstops home at their fast feedrate first, then once the endstop is found they home again at their slow feedrate for accuracy
+alpha_fast_homing_rate_mm_s                  60               # Alpha/X fast homing feedrate in mm/second
+alpha_slow_homing_rate_mm_s                  25               # Alpha/X slow homing feedrate in mm/second
+beta_fast_homing_rate_mm_s                   60               # Beta/Y  fast homing feedrate in mm/second
+beta_slow_homing_rate_mm_s                   25               # Beta/Y  slow homing feedrate in mm/second
+gamma_fast_homing_rate_mm_s                  7                # Gamma/Z fast homing feedrate in mm/second
+gamma_slow_homing_rate_mm_s                  2                # Gamma/Z slow homing feedrate in mm/second
+
+alpha_homing_retract_mm                      5                # Distance to retract from the endstop after it is hit for alpha/X
+beta_homing_retract_mm                       5                # Distance to retract from the endstop after it is hit for beta/Y
+gamma_homing_retract_mm                      1                # Distance to retract from the endstop after it is hit for gamma/Z
+
+
+## Panel
+# See http://smoothieware.org/panel
+# Please find your panel on the wiki and copy/paste the right configuration here
+panel.enable                                 true              # set to true to enable the panel code
+panel.lcd                                    viki2             # set type of panel
+panel.spi_channel                            0                 # set spi channel to use P0_18,P0_15 MOSI,SCLK
+panel.spi_cs_pin                             0.16              # set spi chip select
+panel.encoder_a_pin                          3.25!^            # encoder pin
+panel.encoder_b_pin                          3.26!^            # encoder pin
+panel.click_button_pin                       1.30!^            # click button
+panel.a0_pin                                 2.11              # st7565 needs an a0
+#panel.contrast                              8                 # some panels need contrast set, this is for viki2
+#panel.encoder_resolution                    4                 # number of clicks to move 1 item
+panel.buzz_pin                               1.31              # pin for buzzer
+panel.red_led_pin                            1.22              # pin for red led on viki2 (5 driver can't use this)
+panel.blue_led_pin                           1.23              # pin for blue led on viki2 (5 driver can't use this)
+#panel.back_button_pin                        1.30!^           # optionally using the red buttin as a back button
+# setup for external sd card on the viki2
+panel.external_sd                            true              # set to true if there is an extrernal sdcard on the panel
+panel.external_sd.spi_channel                0                 # set spi channel the sdcard is on
+panel.external_sd.spi_cs_pin                 2.8               # set spi chip select for the sdcard (NOTE 5 drvier can't use this)
+panel.external_sd.sdcd_pin                   2.13!^            # sd detect signal (set to nc if no sdcard detect) (NOTE 5 drvier can't use this)
+
+
+
+## Custom menus : Example of a custom menu entry, which will show up in the Custom entry.
+# NOTE _ gets converted to space in the menu and commands, | is used to separate multiple commands
+custom_menu.power_on.enable                true              #
+custom_menu.power_on.name                  Power_on          #
+custom_menu.power_on.command               M80               #
+
+custom_menu.power_off.enable               true              #
+custom_menu.power_off.name                 Power_off         #
+custom_menu.power_off.command              M81               #
+
+
+## Network settings
+# See http://smoothieware.org/network
+network.enable                               true	      # Enable the ethernet network services
+network.webserver.enable                     true             # Enable the webserver
+network.telnet.enable                        true             # Enable the telnet server
+network.ip_address                           auto             # Use dhcp to get ip address
+# Uncomment the 3 below to manually setup ip address
+#network.ip_address                           192.168.3.222   # The IP address
+#network.ip_mask                              255.255.255.0   # The ip mask
+#network.ip_gateway                           192.168.3.1     # The gateway address
+#network.mac_override                         xx.xx.xx.xx.xx.xx  # Override the mac address, only do this if you have a conflict
+
+## System configuration
+# Serial communications configuration ( baud rate defaults to 9600 if undefined )
+# For communication over the UART port, *not* the USB/Serial port
+uart0.baud_rate                              115200           # Baud rate for the default hardware ( UART ) serial port
+
+second_usb_serial_enable                     false            # This enables a second USB serial port
+#leds_disable                                true             # Disable using leds after config loaded
+#play_led_disable                            true             # Disable the play led
+
+# Kill button maybe assigned to a different pin, set to the onboard pin by default
+# See http://smoothieware.org/killbutton
+kill_button_enable                           true             # Set to true to enable a kill button
+kill_button_pin                              2.12             # Kill button pin. default is same as pause button 2.12 (2.11 is another good choice)
+
+currentcontrol_module_enable                 true             # Control stepper motor current via the configuration file
