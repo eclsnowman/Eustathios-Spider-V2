@@ -1,3 +1,4 @@
 You can fix the part cooling blowers on Walter Hsiaos space invader carriage with a M3 screw instead of gluing it.
 Just mirror the part in your slicer to get a "left and right" part.
 You need to drill a hole an cut a thread into the carriage to fix it.
+The fans ca be addiationally fixed with an M4 grub screw, see picures.
