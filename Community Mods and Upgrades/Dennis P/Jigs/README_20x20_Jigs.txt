@@ -1,4 +1,4 @@
-Drill and Tapping Jigs for 20x20 extrusions:
+Drill and Tapping Jigs for 8020.net brand 20x20 extrusions: the 8020 extrusions are a little bit different than other 20x20 profiles. The slots are a tad narrower, 5.25mm wide, but these should work on 6mm slots as well. 
 
 End_Tap_Jig to guide a standard M5 tap parallel to the extrusion axis. There are 2 versions- one with a standard M5 nut well, and one with a 5mm bore. 
 	The one with the nut is intended to be printed with the flat end down and paused to insert the nut when the print reaches the top of the well. By using a nut in the jig, it will time the tap to the same orientation of the end of the extrusion.  
