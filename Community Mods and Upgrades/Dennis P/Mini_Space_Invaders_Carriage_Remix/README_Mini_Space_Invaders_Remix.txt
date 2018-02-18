@@ -1,10 +1,11 @@
 Changes to the original design by Walter Hsiao, (http://www.thingiverse.com/thing:1322641)
 
 1. Added M3 heatserts for the top & bottom E3D hotend clamp screws, added a boss to support the bottom insert.
-2. Counterbored the clamp screw holes for M3 set screws. You can fit an regular M3x0.5-40mm cap screw if you can not find M3 setscrews that are long enough.
-3. Added pilot holes for Daniel F Fan support parts. 
+2. Counterbored the clamp screw holes for M3 set screws. You can fit an regular M3x0.5-50mm cap screw if you can not find M3 setscrews that are long enough.
+3. Added M3 heatserts holes for Daniel F Fan support parts. 
 4. Offset the 40mm fan hole to provide a little more material to secure the heatserts. 
 5. Remodeled the top clamp so that the end of the setscrew is captive in the clamp to aid assembly. 
+6. Remixed Daniel F fan support to include a boss to trap one side of the fan clip and a boss to tap an M5 socket screw to catch the other side, and a place to zip-tie the electrical cables to.
 
 Print Settings: 0.2mm layer heights
 Top Layers- I did 5 and got a little bit of deformation around the M3 heatserts. 
